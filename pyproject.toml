@@ -1,0 +1,165 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "nonogram"
+version = "0.1.0"
+description = ""
+authors = ["Arthur Chang <arthurc0102@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+nonogram = 'nonogram.cli:app'
+
+[tool.poetry.dependencies]
+python = "^3.12"
+typer = { version = "^0.9.0", extras = ["all"] }
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.22.1"
+
+[tool.poetry.group.lint.dependencies]
+ruff = "^0.3.0"
+# Use same version with VSCode Pylance: https://github.com/microsoft/pylance-release/blob/main/releases/latest-release.json
+pyright = "1.1.348"
+black = "^24.2.0"
+
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    # pyflakes
+    "F",
+    # pycodestyle
+    "E",
+    "W",
+    # pep8-naming
+    "N",
+    # pylint
+    "PL",
+    # mccabe
+    "C90",
+    # isort
+    "I",
+    # pydocstyle
+    "D",
+    # pyupgrade
+    "UP",
+    # flake8-builtins
+    "A",
+    # flake8-commas
+    "COM",
+    # flake8-bugbear
+    "B",
+    # flake8-comprehensions
+    "C4",
+    # flake8-type-checking
+    "TCH",
+    # flake8-datetimez
+    "DTZ",
+    # flake8-print
+    "T20",
+    # flake8-tidy-imports
+    "TID",
+    # flake8-simplify
+    "SIM",
+    # flake8-quotes
+    "Q",
+    # flake8-use-pathlib
+    "PTH",
+    # flake8-import-conventions
+    "ICN",
+    # flake8-bandit
+    "S",
+    # flake8-logging-format
+    "G",
+    # tryceratops
+    "TRY",
+    # flake8-debugger
+    "T10",
+    # flake8-annotations
+    "ANN",
+    # flake8-blind-except
+    "BLE",
+    # flake8-boolean-trap
+    "FBT",
+    # flake8-implicit-str-concat
+    "ISC",
+    # flake8-no-pep420
+    "INP",
+    # flake8-pie
+    "PIE",
+    # flake8-pytest-style
+    "PT",
+    # flake8-raise
+    "RSE",
+    # flake8-return
+    "RET",
+    # flake8-self
+    "SLF",
+    # flake8-unused-arguments
+    "ARG",
+    # pygrep-hooks
+    "PGH",
+    # eradicate
+    "ERA",
+    # ruff-specific rules
+    "RUF",
+]
+ignore = [
+    # pydocstyle: Do not require any docstring
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106",
+    "D107",
+    "D212",
+    "D203",
+    # pydocstyle: Allow blank line after docstring
+    "D202",
+    # flake8-pytest-style: Don't required leading underscore when fixture does not return anything
+    "PT004",
+    # flake8-annotations: Don't required type annotation for self and cls
+    "ANN101",
+    "ANN102",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"] # flake8-bandit: Allow using assert
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.flake8-import-conventions]
+banned-from = ["typing"]
+
+[tool.ruff.lint.flake8-type-checking]
+strict = true
+
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "strict"
+reportUnnecessaryTypeIgnoreComment = true
+
+
+[tool.pytest.ini_options]
+addopts = "-vv --cov=server --cov-report=html --cov-report=term-missing -p no:legacypath -x"
+python_files = ["tests.py", "test_*.py", "*_test.py"]
+filterwarnings = ["error"]
+
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+exclude_also = ["if typing.TYPE_CHECKING:", "@typing.overload"]
