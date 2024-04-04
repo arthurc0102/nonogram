@@ -104,6 +104,6 @@ class NonogramSolver:
     @property
     def answer_str(self) -> str:
         return "\n".join(
-            "".join(("O" if c == self.Status.FILL else "X") for c in r)
+            " ".join(("O" if c == self.Status.FILL else "_") for c in r)
             for r in self.answer
         )
